@@ -18,6 +18,7 @@ public class ReversingStrategyFactory {
 	 * @return reversal strategy for dealing with tight spaces
 	 */
 	public ReversingStrategy getReversingStrategy() {
+		
 		return null;
 	}
 	

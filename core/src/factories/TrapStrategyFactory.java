@@ -15,20 +15,18 @@ public class TrapStrategyFactory {
 	}
 	
 	/**
-	 * Gets the trap avoidance strategy for the car at the moment
-	 * @return trap strategy for dealing with special cells.
+	 * Gets the reversing strategy for the car at a deadend
+	 * @return reversing strategy for deadends 
 	 */
 	public ReversingStrategy getReversingStrategy() {
 		return null;
 	}
 	
 	/**
-	 * 
-	 * @param strategy
-	 * @return
+	 * Sets the new reversing strategy for the car at a deadend
+	 * @param reversing strategy for deadends 
 	 */
-	public ReversingStrategy setReversingStrategy(String strategy) {
-		return null;
+	public void setReversingStrategy(String strategy) {
+		
 	}
-	
 }
