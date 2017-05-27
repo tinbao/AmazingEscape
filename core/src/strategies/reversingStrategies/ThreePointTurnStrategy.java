@@ -2,7 +2,7 @@ package strategies.reversingStrategies;
 
 import strategies.ReversingStrategy;
 
-public class ThreePointTurnStrategy extends ReversingStrategy{
+public class ThreePointTurnStrategy implements ReversingStrategy{
 
 	@Override
 	/** 

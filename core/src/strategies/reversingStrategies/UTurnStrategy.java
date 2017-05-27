@@ -2,7 +2,7 @@ package strategies.reversingStrategies;
 
 import strategies.ReversingStrategy;
 
-public class UTurnStrategy extends ReversingStrategy{
+public class UTurnStrategy implements ReversingStrategy{
 
 	@Override
 	/** 

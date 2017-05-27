@@ -1,32 +1,56 @@
 package factories;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import strategies.ReversingStrategy;
+import strategies.reversingStrategies.*;
 
 public class ReversingStrategyFactory {
 	
-	private ReversingStrategy instance;
+	protected enum reversingStrategies{
+		STRAIGHT, U_TURN, THREE_POINT;
+	}
+	
+	/** A map for all the strategies */
+	private Map<reversingStrategies, ReversingStrategy> strategies = 
+			new HashMap<reversingStrategies, ReversingStrategy>();
+	
+	private ReversingStrategyFactory instance;
+	private ReversingStrategy currentStrategy;
 	
 	/**
 	 * Constructor factory for the reversing strategies
 	 */
 	public ReversingStrategyFactory() {
+		strategies.put(reversingStrategies.STRAIGHT, new DirectReverseStrategy());
+		strategies.put(reversingStrategies.U_TURN, new UTurnStrategy());
+		strategies.put(reversingStrategies.THREE_POINT, new ThreePointTurnStrategy());
 		
+		setReversingStrategy(reversingStrategies.STRAIGHT);
 	}
 	
 	/**
 	 * Gets the reversing strategy for the car at the moment
 	 * @return reversal strategy for dealing with tight spaces
 	 */
-	public ReversingStrategy getReversingStrategy() {
-		
-		return null;
+	public ReversingStrategyFactory getInstance() {
+		return instance;
 	}
 	
 	/**
-	 * Sets the reversing strategy for the car at the moment
-	 * @param strategy comparitor string to check which strategy is employed
+	 * Switches the current employed strategy
+	 * @param newStrategy changing strategy
 	 */
-	public void setReversingStrategy(String strategy) {
-		
+	public void setReversingStrategy(reversingStrategies newStrategy) {
+		currentStrategy = strategies.get(newStrategy);
+	}
+	
+	/**
+	 * Gets the reversing strategy for the car in use
+	 * @return maze reversing strategy for dealing with dead ends
+	 */
+	public ReversingStrategy getReversingStrategy(){
+		return currentStrategy;
 	}
 }

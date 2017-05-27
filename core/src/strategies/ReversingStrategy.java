@@ -1,6 +1,6 @@
 package strategies;
 
-public abstract class ReversingStrategy {
+public interface ReversingStrategy {
 	
 	/** 
 	 * Update for the positioning of the car under the strategy

@@ -1,32 +1,57 @@
 package factories;
 
-import strategies.ReversingStrategy;
+import java.util.HashMap;
+import java.util.Map;
+
 import strategies.TrapStrategy;
+import strategies.trapStrategies.GrassStrategy;
+import strategies.trapStrategies.LavaStrategy;
+import strategies.trapStrategies.MudStrategy;
 
 public class TrapStrategyFactory {
 	
-	private TrapStrategy instance;
+	protected enum trapStrategies {
+		GRASS, MUD, LAVA;
+	}
+	
+	private TrapStrategyFactory instance;
+	private TrapStrategy currentStrategy;
+	
+	/** A map for all the strategies */
+	private Map<trapStrategies, TrapStrategy> strategies = 
+			new HashMap<trapStrategies, TrapStrategy>();
 	
 	/**
 	 * Constructor factory for the trap strategies
 	 */
 	public TrapStrategyFactory() {
-		
+		strategies.put(trapStrategies.LAVA, new LavaStrategy());
+		strategies.put(trapStrategies.MUD, new MudStrategy());
+		strategies.put(trapStrategies.GRASS, new GrassStrategy());
+		setTrapStrategy(trapStrategies.LAVA);
 	}
 	
 	/**
-	 * Gets the reversing strategy for the car at a deadend
-	 * @return reversing strategy for deadends 
+	 * Getter for the instance (factory)
+	 * @return trap strategy factory
+	 */
+	public TrapStrategyFactory getInstance() {
+		return instance;
+	}
+	
+	/**
+	 * Gets the trap strategy for the car at a deadend
+	 * @return trap strategy for deadends 
 	 */
 	public TrapStrategy getTrapStrategy() {
-		return null;
+		return currentStrategy;
 	}
 	
 	/**
-	 * Sets the new reversing strategy for the car at a deadend
-	 * @param reversing strategy for deadends 
+	 * Switches the current employed strategy
+	 * @param newStrategy changing strategy
 	 */
-	public void setTrapStrategy(String strategy) {
-		
+	public void setTrapStrategy(trapStrategies newStrategy) {
+		currentStrategy = strategies.get(newStrategy);
 	}
 }
