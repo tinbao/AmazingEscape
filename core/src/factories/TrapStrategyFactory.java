@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import strategies.TrapStrategy;
-import strategies.trapStrategies.GrassStrategy;
-import strategies.trapStrategies.LavaStrategy;
-import strategies.trapStrategies.MudStrategy;
+import strategies.trapStrategies.*;
 
 public class TrapStrategyFactory {
 	

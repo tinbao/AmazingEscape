@@ -1,7 +1,5 @@
 package strategies;
 
-import mycontroller.MyAIController;
-
 public interface MazeTraversalStrategy {
 	
 	/** 

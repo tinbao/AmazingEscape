@@ -2,7 +2,7 @@ package strategies.trapStrategies;
 
 import strategies.TrapStrategy;
 
-public class GrassStrategy extends TrapStrategy{
+public class GrassStrategy implements TrapStrategy{
 
 	@Override
 	/** 

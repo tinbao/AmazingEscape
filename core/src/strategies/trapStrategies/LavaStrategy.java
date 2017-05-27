@@ -2,7 +2,7 @@ package strategies.trapStrategies;
 
 import strategies.TrapStrategy;
 
-public class LavaStrategy extends TrapStrategy{
+public class LavaStrategy implements TrapStrategy{
 
 	@Override
 	/** 

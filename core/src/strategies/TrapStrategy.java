@@ -1,6 +1,6 @@
 package strategies;
 
-public abstract class TrapStrategy {
+public interface TrapStrategy {
 	
 	/** 
 	 * Update for the positioning of the car under the strategy
