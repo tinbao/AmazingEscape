@@ -17,7 +17,7 @@ public class TraversalStrategyFactory {
 	 * Gets the traversal strategy for the car at the moment
 	 * @return maze traversal strategy for dealing with tight spaces
 	 */
-	public MazeTraversalStrategy getMazeTraversalStrategy(){
+	public MazeTraversalStrategy getTraversalStrategy(){
 					
 		return null;
 	}
@@ -26,7 +26,7 @@ public class TraversalStrategyFactory {
 	 * Sets the traversal strategy for the car at the moment
 	 * @return maze traversal strategy for dealing with tight spaces
 	 */
-	public void setMazeTraversalStrategy(String strategy) {
+	public void setTraversalStrategy(String strategy) {
 		
 	}
 }

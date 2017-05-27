@@ -44,13 +44,18 @@ public class MyAIController extends CarController{
 	}
 
 	/**
-	 * Update the car
+	 * Update the car's position
 	 * @param delta time passing
 	 */
 	@Override
 	public void update(float delta) {
+		/* Update the car's actions based on strategies */
+		mtsFactory.getTraversalStrategy().update(delta);
+		tsFactory.getTrapStrategy().update(delta);
+		rsFactory.getReversingStrategy().update(delta);
 		
-		
+		/* Update the car's state after the strategy's decisions */
+		state.event(delta);
 	}
 	
 	/**

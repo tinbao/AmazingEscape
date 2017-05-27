@@ -18,7 +18,7 @@ public class TrapStrategyFactory {
 	 * Gets the reversing strategy for the car at a deadend
 	 * @return reversing strategy for deadends 
 	 */
-	public ReversingStrategy getReversingStrategy() {
+	public TrapStrategy getTrapStrategy() {
 		return null;
 	}
 	
@@ -26,7 +26,7 @@ public class TrapStrategyFactory {
 	 * Sets the new reversing strategy for the car at a deadend
 	 * @param reversing strategy for deadends 
 	 */
-	public void setReversingStrategy(String strategy) {
+	public void setTrapStrategy(String strategy) {
 		
 	}
 }
