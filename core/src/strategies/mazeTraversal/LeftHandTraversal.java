@@ -22,7 +22,7 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 	private int wallSensitivity = 2;
 		
 	/** Car's top speed */
-	private final float CAR_SPEED = 2.5f;
+	private final float CAR_SPEED = 3f;
 	
 	/** Offset used to differentiate between 0 and 360 degrees */
 	private int EAST_THRESHOLD = 3;
@@ -34,6 +34,7 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 	private WorldSpatial.Direction previousState; // Keeps track of the previous state
 	
 	private WorldSpatial.Direction wallPos; // where the wall is relative to the car
+	private Coordinate wallCoord;
 	
 	/**
 	 * Constructor for the traversal algorithm
@@ -61,7 +62,6 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 		HashMap<Coordinate, MapTile> currentView = control.getView();
 		
 		checkStateChange();
-		//  || tile.getName().equals("Trap")
 		// If you are not following a wall initially, find a wall to stick to!
 		if(!isFollowingWall){
 			if(control.getVelocity() < CAR_SPEED) {
@@ -85,7 +85,7 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 		}
 		// Once the car is already stuck to a wall, apply the following logic
 		else{
-			if(control.getVelocity() < CAR_SPEED) {
+			if(control.getVelocity() < CAR_SPEED){
 				control.applyForwardAcceleration();
 			}
 			// Readjust the car if it is misaligned.
@@ -113,12 +113,33 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 				if(checkWallAhead(control.getOrientation(),currentView)){
 					lastTurnDirection = WorldSpatial.RelativeDirection.RIGHT;
 					isTurningRight = true;				
-					
 				}
-
 			}
 			// This indicates that I can do a left turn if I am not turning right
 			else{
+				
+				Coordinate currentPosition = new Coordinate(control.getPosition());
+				//System.out.printf("wall: %d, %d\n", wallCoord.x, wallCoord.y);
+				//System.out.printf("car : %d, %d\n", currentPosition.x, currentPosition.y);
+				
+				switch(wallPos){
+				case NORTH:
+					if((wallCoord.y - currentPosition.y) < wallSensitivity){
+						adjustLeft(control.getOrientation(), delta);
+					}
+				case EAST:
+					if((wallCoord.x - currentPosition.x) < wallSensitivity){
+						adjustLeft(control.getOrientation(), delta);
+					}
+				case SOUTH:
+					if((currentPosition.y - wallCoord.y) < wallSensitivity) {
+						adjustLeft(control.getOrientation(), delta);
+					}
+				case WEST:
+					if((currentPosition.x - wallCoord.x) < wallSensitivity){
+						adjustLeft(control.getOrientation(), delta);
+					}
+				}
 				lastTurnDirection = WorldSpatial.RelativeDirection.LEFT;
 				isTurningLeft = true;
 			}
@@ -286,6 +307,7 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 			MapTile tile = currentView.get(new Coordinate(currentPosition.x+i, currentPosition.y));
 			if(tile.getName().equals("Wall")){
 				wallPos = WorldSpatial.Direction.EAST;
+				wallCoord = new Coordinate(currentPosition.x+i, currentPosition.y);
 				return true;
 			}
 		}
@@ -299,6 +321,7 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 			MapTile tile = currentView.get(new Coordinate(currentPosition.x-i, currentPosition.y));
 			if(tile.getName().equals("Wall")){
 				wallPos = WorldSpatial.Direction.WEST;
+				wallCoord = new Coordinate(currentPosition.x-i, currentPosition.y);
 				return true;
 			}
 		}
@@ -312,6 +335,7 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 			MapTile tile = currentView.get(new Coordinate(currentPosition.x, currentPosition.y+i));
 			if(tile.getName().equals("Wall")){
 				wallPos = WorldSpatial.Direction.NORTH;
+				wallCoord = new Coordinate(currentPosition.x, currentPosition.y+i);
 				return true;
 			}
 		}
@@ -325,6 +349,7 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 			MapTile tile = currentView.get(new Coordinate(currentPosition.x, currentPosition.y-i));
 			if(tile.getName().equals("Wall")){
 				wallPos = WorldSpatial.Direction.SOUTH;
+				wallCoord = new Coordinate(currentPosition.x, currentPosition.y-i);
 				return true;
 			}
 		}
