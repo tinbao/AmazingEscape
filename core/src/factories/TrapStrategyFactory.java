@@ -9,26 +9,22 @@ import strategies.trapStrategies.*;
 
 public class TrapStrategyFactory {
 	
-	protected enum trapStrategies {
-		GRASS, MUD, LAVA;
-	}
-	
 	private TrapStrategyFactory instance;
 	private TrapStrategy currentStrategy;
 	
 	/** A map for all the strategies */
-	private Map<trapStrategies, TrapStrategy> strategies = 
-			new HashMap<trapStrategies, TrapStrategy>();
+	private Map<TrapStrategies, TrapStrategy> strategies = 
+			new HashMap<TrapStrategies, TrapStrategy>();
 	
 	/**
 	 * Constructor factory for the trap strategies
 	 */
 	public TrapStrategyFactory(MyAIController c) {
-		strategies.put(trapStrategies.LAVA, new LavaStrategy(c));
-		strategies.put(trapStrategies.MUD, new MudStrategy());
-		strategies.put(trapStrategies.GRASS, new GrassStrategy());
+		strategies.put(TrapStrategies.LAVA, new LavaStrategy(c));
+		strategies.put(TrapStrategies.MUD, new MudStrategy());
+		strategies.put(TrapStrategies.GRASS, new GrassStrategy());
 		
-		setTrapStrategy(trapStrategies.LAVA);
+		setTrapStrategy(TrapStrategies.LAVA);
 	}
 	
 	/**
@@ -51,7 +47,7 @@ public class TrapStrategyFactory {
 	 * Switches the current employed strategy
 	 * @param newStrategy changing strategy
 	 */
-	public void setTrapStrategy(trapStrategies newStrategy) {
+	public void setTrapStrategy(TrapStrategies newStrategy) {
 		currentStrategy = strategies.get(newStrategy);
 	}
 }
