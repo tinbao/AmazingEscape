@@ -33,6 +33,8 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 	private boolean isTurningRight; 
 	private WorldSpatial.Direction previousState; // Keeps track of the previous state
 	
+	private WorldSpatial.Direction wallPos; // where the wall is relative to the car
+	
 	/**
 	 * Constructor for the traversal algorithm
 	 * @param control controller
@@ -59,6 +61,8 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 		HashMap<Coordinate, MapTile> currentView = control.getView();
 		
 		checkStateChange();
+		
+		Coordinate currentPosition = new Coordinate(control.getPosition());
 				
 		// If you are not following a wall initially, find a wall to stick to!
 		if(!isFollowingWall){
@@ -281,6 +285,7 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 		for(int i = 0; i <= wallSensitivity; i++){
 			MapTile tile = currentView.get(new Coordinate(currentPosition.x+i, currentPosition.y));
 			if(tile.getName().equals("Wall")){
+				wallPos = WorldSpatial.Direction.EAST;
 				return true;
 			}
 		}
@@ -293,6 +298,7 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 		for(int i = 0; i <= wallSensitivity; i++){
 			MapTile tile = currentView.get(new Coordinate(currentPosition.x-i, currentPosition.y));
 			if(tile.getName().equals("Wall")){
+				wallPos = WorldSpatial.Direction.WEST;
 				return true;
 			}
 		}
@@ -305,6 +311,7 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 		for(int i = 0; i <= wallSensitivity; i++){
 			MapTile tile = currentView.get(new Coordinate(currentPosition.x, currentPosition.y+i));
 			if(tile.getName().equals("Wall")){
+				wallPos = WorldSpatial.Direction.NORTH;
 				return true;
 			}
 		}
@@ -316,7 +323,9 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 		Coordinate currentPosition = new Coordinate(control.getPosition());
 		for(int i = 0; i <= wallSensitivity; i++){
 			MapTile tile = currentView.get(new Coordinate(currentPosition.x, currentPosition.y-i));
+			System.out.println(tile.getName());
 			if(tile.getName().equals("Wall")){
+				wallPos = WorldSpatial.Direction.SOUTH;
 				return true;
 			}
 		}

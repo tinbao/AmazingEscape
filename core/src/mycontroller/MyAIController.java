@@ -62,8 +62,11 @@ public class MyAIController extends CarController{
 			/* Do left hand traverse normally */
 			if(state == CarState.DRIVING){
 				mtsFactory.getTraversalStrategy().update(delta);
+			} else if(state == CarState.REVERSING){
+				rsFactory.getReversingStrategy().update(delta);
 			}
 		}
+		
 	}
 	
 	/**

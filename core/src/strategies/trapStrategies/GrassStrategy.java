@@ -9,9 +9,6 @@ public class GrassStrategy implements TrapStrategy{
 	/* Need controller for car's functions */
 	private MyAIController control;
 	
-	// How many minimum units the wall is away from the player.
-	private int wallSensitivity = 2;
-	
 	/** Offset used to differentiate between 0 and 360 degrees */
 	private int EAST_THRESHOLD = 3;
 	

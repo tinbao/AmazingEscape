@@ -5,6 +5,7 @@ import strategies.TrapStrategy;
 
 public class LavaStrategy implements TrapStrategy{
 	
+	private MyAIController control;
 	
 	/** 
 	 * Update for the positioning of the car under the strategy
@@ -12,9 +13,14 @@ public class LavaStrategy implements TrapStrategy{
 	 */
 	@Override
 	public void update(float delta) {
+		
 	}
 
 	public LavaStrategy(MyAIController control) {
-		
+		this.control = control;
 	}
+	
+	
+	
 }
+
