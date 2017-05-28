@@ -40,7 +40,7 @@ public class LavaStrategy implements TrapStrategy{
 		Coordinate currentPosition = new Coordinate(control.getPosition());
 		for(int i = 0; i <= wallSensitivity; i++){
 			MapTile tile = currentView.get(new Coordinate(currentPosition.x+i, currentPosition.y));
-			if(tile.toString().startsWith("tiles.LavaTrap")) {
+			if(tile.toString().startsWith("tiles.LavaTrap") || tile.toString().startsWith("tiles.GrassTrap")) {
 				return true;
 			}
 		}

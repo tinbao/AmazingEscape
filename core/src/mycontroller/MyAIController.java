@@ -50,14 +50,13 @@ public class MyAIController extends CarController{
 			rsFactory.getReversingStrategy().update(delta);
 		}
 		
-		/* Always be on the lookout for traps */
-		tsFactory.getTrapStrategy().update(delta);
-		
 		/* Update the car's state after the strategy's decisions */
 		state = state.event(delta);
 		System.out.println((System.currentTimeMillis() - start) / 1000);
-		if(((System.currentTimeMillis() - start) / 1000) > 13) {
-			state = CarState.REVERSING;
+		if(((System.currentTimeMillis() - start) / 1000) > 12.5) {
+			//state = CarState.REVERSING;
+			/* Always be on the lookout for traps */
+			tsFactory.getTrapStrategy().update(delta);
 		}
 	}
 	
