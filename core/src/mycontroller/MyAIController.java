@@ -12,7 +12,7 @@ public class MyAIController extends CarController{
 	
 	public static final double REVOLUTION = 360.;
 	public static final double QUADRANTS = 4.;
-	public static final double ANGLE_TOLERANCE = 0.05;
+	public static final double ANGLE_TOLERANCE = 0.1;
 	
 	/* STRATEGY FACTORIES */
 	protected TraversalStrategyFactory mtsFactory;
@@ -72,7 +72,8 @@ public class MyAIController extends CarController{
 	}
 	
 	private boolean straight() {
-		return Math.abs((((this.getAngle()/REVOLUTION)*QUADRANTS)%1.)-1.) < ANGLE_TOLERANCE;
+		System.out.println(Math.abs((((this.getAngle()/REVOLUTION)*QUADRANTS)%1)));
+		return Math.abs((((this.getAngle()/REVOLUTION)*QUADRANTS)%1.)) < ANGLE_TOLERANCE;
 	}
 
 	/**

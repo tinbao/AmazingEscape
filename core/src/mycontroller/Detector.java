@@ -33,6 +33,7 @@ public class Detector {
 		for(int i=0; i<= Car.VIEW_SQUARE; i++) {
 			sTile = currentView.get(new Coordinate(currentPosition.x+i*h, currentPosition.y+i*v)).toString();
 			sTile = sTile.split("@")[0];
+			System.out.println(sTile);
 			switch(sTile) {
 				case "tiles.LavaTrap":
 					return TileType.LAVAMUD;
