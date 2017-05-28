@@ -20,11 +20,10 @@ public class TrapStrategyFactory {
 	 * Constructor factory for the trap strategies
 	 */
 	public TrapStrategyFactory(MyAIController c) {
-		strategies.put(TrapStrategies.LAVA, new LavaStrategy(c));
-		strategies.put(TrapStrategies.MUD, new MudStrategy());
+		strategies.put(TrapStrategies.LAVAMUD, new LavaMudStrategy());
 		strategies.put(TrapStrategies.GRASS, new GrassStrategy());
 		
-		setTrapStrategy(TrapStrategies.LAVA);
+		setTrapStrategy(TrapStrategies.LAVAMUD);
 	}
 	
 	/**

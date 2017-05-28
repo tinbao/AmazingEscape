@@ -10,6 +10,10 @@ import tiles.MapTile;
 
 public class MyAIController extends CarController{
 	
+	public static final double REVOLUTION = 360.;
+	public static final double QUADRANTS = 4.;
+	public static final double ANGLE_TOLERANCE = 0.05;
+	
 	/* STRATEGY FACTORIES */
 	protected TraversalStrategyFactory mtsFactory;
 	protected TrapStrategyFactory tsFactory;
@@ -39,17 +43,16 @@ public class MyAIController extends CarController{
 	 */
 	@Override
 	public void update(float delta) {
+		if(!straight()) {
+			mtsFactory.getTraversalStrategy().update(delta);
+			return;
+		}
 		/* Detect what the next tile is from getView */
 		TileType tt = Detector.tileAhead(getView(), getPosition(), getOrientation());
+		System.out.println(tt);
 		switch(tt) {
-		case GRASS:
-			tsFactory.setTrapStrategy(TrapStrategies.GRASS);
-			break;
-		case LAVA:
-			tsFactory.setTrapStrategy(TrapStrategies.LAVA);
-			break;
-		case MUD:
-			tsFactory.setTrapStrategy(TrapStrategies.MUD);
+		case LAVAMUD:
+			tsFactory.setTrapStrategy(TrapStrategies.LAVAMUD);
 			break;
 		default:
 			break;
@@ -59,12 +62,16 @@ public class MyAIController extends CarController{
 		}
 		else {
 			/* Do left hand traverse normally */
-			if(state == CarState.DRIVING){
+			if(state == CarState.DRIVING) {
 				mtsFactory.getTraversalStrategy().update(delta);
 			}
 		}
 	}
 	
+	private boolean straight() {
+		return Math.abs((((this.getAngle()/REVOLUTION)*QUADRANTS)%1.)-1.) < ANGLE_TOLERANCE;
+	}
+
 	/**
 	 * Chooses a suitable algorithm for the specific environment the car is in
 	 * @param currentView car's current viewable range
