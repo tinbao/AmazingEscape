@@ -61,11 +61,10 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 		HashMap<Coordinate, MapTile> currentView = control.getView();
 		
 		checkStateChange();
-		Coordinate currentPosition = new Coordinate(control.getPosition());
-
+		//  || tile.getName().equals("Trap")
 		// If you are not following a wall initially, find a wall to stick to!
 		if(!isFollowingWall){
-			if(control.getVelocity() < CAR_SPEED){
+			if(control.getVelocity() < CAR_SPEED) {
 				control.applyForwardAcceleration();
 			}
 			// Turn towards the north
@@ -86,7 +85,7 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 		}
 		// Once the car is already stuck to a wall, apply the following logic
 		else{
-			if(control.getVelocity() < CAR_SPEED){
+			if(control.getVelocity() < CAR_SPEED) {
 				control.applyForwardAcceleration();
 			}
 			// Readjust the car if it is misaligned.
@@ -324,7 +323,6 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 		Coordinate currentPosition = new Coordinate(control.getPosition());
 		for(int i = 0; i <= wallSensitivity; i++){
 			MapTile tile = currentView.get(new Coordinate(currentPosition.x, currentPosition.y-i));
-			System.out.println(tile.getName());
 			if(tile.getName().equals("Wall")){
 				wallPos = WorldSpatial.Direction.SOUTH;
 				return true;

@@ -14,7 +14,6 @@ public class Detector {
 		// horizontal and vertical multipliers for correct direction iteration
 		int h=0;
 		int v=0;
-		System.out.println(orientation);
 		switch(orientation) {
 			case NORTH:
 				v=1;
@@ -30,17 +29,19 @@ public class Detector {
 				break;
 		}
 		String sTile;
-		for(int i=0; i<= Car.VIEW_SQUARE; i++) {
-			sTile = currentView.get(new Coordinate(currentPosition.x+i*h, currentPosition.y+i*v)).toString();
+		
+		for(int i=0; i <= Car.VIEW_SQUARE; i++) {
+			sTile = currentView.get(new Coordinate((currentPosition.x+i*h), (currentPosition.y+i*v))).toString();
 			sTile = sTile.split("@")[0];
+			System.out.println(v + "<>" + h + "<>" + i);
+			System.out.println(currentPosition.x+"<>" + (currentPosition.y));
+			System.out.println(currentPosition.x+i*h + "<>" + (currentPosition.y+i*v));
 			System.out.println(sTile);
 			switch(sTile) {
 				case "tiles.LavaTrap":
 					return TileType.LAVAMUD;
 				case "tiles.MudTrap":
 					return TileType.LAVAMUD;
-				case "tiles.MapTile":
-					return TileType.MAPTILE;
 			}
 		}
 		return TileType.MAPTILE;
