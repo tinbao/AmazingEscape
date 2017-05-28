@@ -16,8 +16,6 @@ public class MyAIController extends CarController{
 	protected ReversingStrategyFactory rsFactory;
 	/** Moving state of the car */
 	protected CarState state;
-		
-	private long start = System.currentTimeMillis();
 	
 	/**
 	 * Constructor for the controller (only going to be instiantised once)
@@ -41,22 +39,30 @@ public class MyAIController extends CarController{
 	 */
 	@Override
 	public void update(float delta) {
-		/* Do left hand traverse normally */
-		if(state == CarState.DRIVING){
-			mtsFactory.getTraversalStrategy().update(delta);
-		} 
-		/* Do reversing strategy when in reverse mode */
-		else if (state == CarState.REVERSING) {
-			rsFactory.getReversingStrategy().update(delta);
+		/* Detect what the next tile is from getView */
+		TileType tt = Detector.tileAhead(getView(), getPosition(), getOrientation());
+		switch(tt) {
+		case GRASS:
+			tsFactory.setTrapStrategy(TrapStrategies.GRASS);
+			break;
+		case LAVA:
+			tsFactory.setTrapStrategy(TrapStrategies.LAVA);
+			break;
+		case MUD:
+			tsFactory.setTrapStrategy(TrapStrategies.MUD);
+			break;
+		default:
+			break;
 		}
-		
-		/* Update the car's state after the strategy's decisions */
-		state = state.event(delta);
-		System.out.println((System.currentTimeMillis() - start) / 1000);
-		if(((System.currentTimeMillis() - start) / 1000) > 12.5) {
-			//state = CarState.REVERSING;
-			/* Always be on the lookout for traps */
+
+		if(tt != TileType.MAPTILE) {
 			tsFactory.getTrapStrategy().update(delta);
+		}
+		else {
+			/* Do left hand traverse normally */
+			if(state == CarState.DRIVING){
+				mtsFactory.getTraversalStrategy().update(delta);
+			}
 		}
 	}
 	
