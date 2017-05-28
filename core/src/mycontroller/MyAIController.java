@@ -56,7 +56,7 @@ public class MyAIController extends CarController{
 		/* Update the car's state after the strategy's decisions */
 		state = state.event(delta);
 		System.out.println((System.currentTimeMillis() - start) / 1000);
-		if(((System.currentTimeMillis() - start) / 1000) > 12) {
+		if(((System.currentTimeMillis() - start) / 1000) > 13) {
 			state = CarState.REVERSING;
 		}
 	}

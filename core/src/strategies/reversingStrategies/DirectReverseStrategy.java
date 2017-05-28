@@ -35,7 +35,7 @@ public class DirectReverseStrategy implements ReversingStrategy{
 	public DirectReverseStrategy(MyAIController control) {
 		this.control = control;
 		
-		this.isFollowingWall = false;
+		this.isFollowingWall = true;
 		
 		this.lastTurnDirection = null;
 		this.isTurningLeft = false;
@@ -53,6 +53,7 @@ public class DirectReverseStrategy implements ReversingStrategy{
 		// Gets what the car can see
 		HashMap<Coordinate, MapTile> currentView = control.getView();
 		
+		//System.out.println(lastTurnDirection);
 		checkStateChange();
 				
 		// If you are not following a wall initially, find a wall to stick to!
@@ -76,42 +77,43 @@ public class DirectReverseStrategy implements ReversingStrategy{
 				}
 			}
 		}
+		
 		// Once the car is already stuck to a wall, apply the following logic
 		else{
 			
 			// Readjust the car if it is misaligned.
 			readjust(lastTurnDirection,delta);
 			
-			if(isTurningLeft){
-				applyLeftTurn(control.getOrientation(),delta);
+			if(isTurningRight){
+				applyRightTurn(control.getOrientation(),delta);
 			}
-			else if(isTurningRight){
+			else if(isTurningLeft){
 				// Apply the left turn if you are not currently near a wall.
-				if(!checkFollowingWall(control.getOrientation(),currentView)){
-					applyRightTurn(control.getOrientation(),delta);
+				if(!checkOtherFollowingWall(control.getOrientation(),currentView)){
+					applyLeftTurn(control.getOrientation(),delta);
 				}
 				else{
-					isTurningRight = false;
+					isTurningLeft = false;
 				}
 			}
 			// Try to determine whether or not the car is next to a wall.
-			else if(checkFollowingWall(control.getOrientation(),currentView)){
+			else if(checkOtherFollowingWall(control.getOrientation(),currentView)){
 				// Maintain some velocity
 				if(control.getVelocity() < CAR_SPEED){
 					control.applyReverseAcceleration();
 				}
 				// If there is wall ahead, turn right!
 				if(checkWallAhead(control.getOrientation(),currentView)){
-					lastTurnDirection = WorldSpatial.RelativeDirection.RIGHT;
-					isTurningLeft = true;				
+					lastTurnDirection = WorldSpatial.RelativeDirection.LEFT;
+					isTurningRight = true;				
 					
 				}
 
 			}
 			// This indicates that I can do a left turn if I am not turning right
 			else{
-				lastTurnDirection = WorldSpatial.RelativeDirection.LEFT;
-				isTurningRight = true;
+				lastTurnDirection = WorldSpatial.RelativeDirection.RIGHT;
+				isTurningLeft = true;
 			}
 		}
 	}
@@ -239,21 +241,21 @@ public class DirectReverseStrategy implements ReversingStrategy{
 	}
 	
 	/**
-	 * Check if the wall is on your left hand side given your orientation
+	 * Check if the wall is on your right hand side given your orientation
 	 * @param orientation
 	 * @param currentView
 	 * @return
 	 */
-	private boolean checkFollowingWall(WorldSpatial.Direction orientation, HashMap<Coordinate, MapTile> currentView) {
+	private boolean checkOtherFollowingWall(WorldSpatial.Direction orientation, HashMap<Coordinate, MapTile> currentView) {
 		
 		switch(orientation){
-		case EAST:
-			return checkNorth(currentView);
-		case NORTH:
-			return checkWest(currentView);
-		case SOUTH:
-			return checkEast(currentView);
 		case WEST:
+			return checkNorth(currentView);
+		case SOUTH:
+			return checkWest(currentView);
+		case NORTH:
+			return checkEast(currentView);
+		case EAST:
 			return checkSouth(currentView);
 		default:
 			return false;
