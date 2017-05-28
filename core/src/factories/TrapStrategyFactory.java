@@ -21,7 +21,7 @@ public class TrapStrategyFactory {
 	 */
 	public TrapStrategyFactory(MyAIController c) {
 		strategies.put(TrapStrategies.LAVAMUD, new LavaMudStrategy());
-		strategies.put(TrapStrategies.GRASS, new GrassStrategy());
+		strategies.put(TrapStrategies.GRASS, new GrassStrategy(c));
 		setTrapStrategy(TrapStrategies.LAVAMUD);
 	}
 	
