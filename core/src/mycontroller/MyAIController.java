@@ -72,8 +72,9 @@ public class MyAIController extends CarController{
 	}
 	
 	private boolean straight() {
-		System.out.println(Math.abs((((this.getAngle()/REVOLUTION)*QUADRANTS)%1)));
-		return Math.abs((((this.getAngle()/REVOLUTION)*QUADRANTS)%1.)) < ANGLE_TOLERANCE;
+		System.out.println(Math.abs((((this.getAngle()/REVOLUTION)*QUADRANTS)%1.)));
+		double epsilon = Math.abs((((this.getAngle()/REVOLUTION)*QUADRANTS)%1.));
+		return epsilon < ANGLE_TOLERANCE || epsilon > 1-ANGLE_TOLERANCE;
 	}
 
 	/**

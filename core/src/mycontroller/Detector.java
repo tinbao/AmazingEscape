@@ -39,6 +39,8 @@ public class Detector {
 					return TileType.LAVAMUD;
 				case "tiles.MudTrap":
 					return TileType.LAVAMUD;
+				case "tiles.MapTile":
+					return TileType.MAPTILE;
 			}
 		}
 		return TileType.MAPTILE;
