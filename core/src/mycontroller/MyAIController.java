@@ -17,6 +17,8 @@ public class MyAIController extends CarController{
 	/** Moving state of the car */
 	protected CarState state;
 		
+	private long start = System.currentTimeMillis();
+	
 	/**
 	 * Constructor for the controller (only going to be instiantised once)
 	 * @param car object representing the car
@@ -26,8 +28,8 @@ public class MyAIController extends CarController{
 		
 		/* creates SINGLETON instances of the factories for strategies */
 		mtsFactory = new TraversalStrategyFactory(this);
-		tsFactory = new TrapStrategyFactory();
-		rsFactory = new ReversingStrategyFactory();
+		tsFactory = new TrapStrategyFactory(this);
+		rsFactory = new ReversingStrategyFactory(this);
 		
 		/* start off ready to go */
 		state = CarState.DRIVING;
@@ -52,7 +54,11 @@ public class MyAIController extends CarController{
 		tsFactory.getTrapStrategy().update(delta);
 		
 		/* Update the car's state after the strategy's decisions */
-		state.event(delta);
+		state = state.event(delta);
+		System.out.println((System.currentTimeMillis() - start) / 1000);
+		if(((System.currentTimeMillis() - start) / 1000) > 12) {
+			state = CarState.REVERSING;
+		}
 	}
 	
 	/**

@@ -3,6 +3,7 @@ package factories;
 import java.util.HashMap;
 import java.util.Map;
 
+import mycontroller.MyAIController;
 import strategies.ReversingStrategy;
 import strategies.reversingStrategies.*;
 
@@ -22,8 +23,8 @@ public class ReversingStrategyFactory {
 	/**
 	 * Constructor factory for the reversing strategies
 	 */
-	public ReversingStrategyFactory() {
-		strategies.put(reversingStrategies.STRAIGHT, new DirectReverseStrategy());
+	public ReversingStrategyFactory(MyAIController c) {
+		strategies.put(reversingStrategies.STRAIGHT, new DirectReverseStrategy(c));
 		strategies.put(reversingStrategies.U_TURN, new UTurnStrategy());
 		strategies.put(reversingStrategies.THREE_POINT, new ThreePointTurnStrategy());
 		

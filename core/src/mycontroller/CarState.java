@@ -14,8 +14,7 @@ public enum CarState {
 	{
 		@Override
 		CarState event(float delta) {
-			// TODO Auto-generated method stub
-			return null;
+			return DRIVING;
 		}
 	}, 
 	
@@ -23,8 +22,8 @@ public enum CarState {
 	{
 		@Override
 		CarState event(float delta) {
-			// TODO Auto-generated method stub
-			return null;
+			
+			return REVERSING;
 		}
 	};
 	

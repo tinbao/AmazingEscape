@@ -3,6 +3,7 @@ package factories;
 import java.util.HashMap;
 import java.util.Map;
 
+import mycontroller.MyAIController;
 import strategies.TrapStrategy;
 import strategies.trapStrategies.*;
 
@@ -22,10 +23,11 @@ public class TrapStrategyFactory {
 	/**
 	 * Constructor factory for the trap strategies
 	 */
-	public TrapStrategyFactory() {
-		strategies.put(trapStrategies.LAVA, new LavaStrategy());
+	public TrapStrategyFactory(MyAIController c) {
+		strategies.put(trapStrategies.LAVA, new LavaStrategy(c));
 		strategies.put(trapStrategies.MUD, new MudStrategy());
 		strategies.put(trapStrategies.GRASS, new GrassStrategy());
+		
 		setTrapStrategy(trapStrategies.LAVA);
 	}
 	
