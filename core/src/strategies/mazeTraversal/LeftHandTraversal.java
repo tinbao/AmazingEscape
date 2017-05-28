@@ -22,7 +22,7 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 	private int wallSensitivity = 2;
 		
 	/** Car's top speed */
-	private final float CAR_SPEED = 3;
+	private final float CAR_SPEED = 2.5f;
 	
 	/** Offset used to differentiate between 0 and 360 degrees */
 	private int EAST_THRESHOLD = 3;
@@ -61,9 +61,8 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 		HashMap<Coordinate, MapTile> currentView = control.getView();
 		
 		checkStateChange();
-		
 		Coordinate currentPosition = new Coordinate(control.getPosition());
-				
+
 		// If you are not following a wall initially, find a wall to stick to!
 		if(!isFollowingWall){
 			if(control.getVelocity() < CAR_SPEED){
@@ -87,7 +86,9 @@ public class LeftHandTraversal implements MazeTraversalStrategy{
 		}
 		// Once the car is already stuck to a wall, apply the following logic
 		else{
-			
+			if(control.getVelocity() < CAR_SPEED){
+				control.applyForwardAcceleration();
+			}
 			// Readjust the car if it is misaligned.
 			readjust(lastTurnDirection,delta);
 			
